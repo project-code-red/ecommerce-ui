@@ -158,45 +158,47 @@ function CategoryContent({ params }: { params: Promise<{ main: string }> }) {
       </div>
 
       {/* Page Header */}
-      <div className="px-4 sm:px-6 lg:px-8 py-6 border-b border-gray-200">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-1">{category.name}</h1>
-            <p className="text-sm text-gray-600">
+      <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 break-words">
+              {category.name}
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-600">
               {filteredProducts.length.toLocaleString()} items
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <ArrowUpDown className="h-4 w-4 text-gray-500" />
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <ArrowUpDown className="h-4 w-4 text-gray-500 hidden sm:block" />
             <Select
               options={sortOptions}
               value={filters.sortBy || "popularity"}
               onChange={(e) => {
                 updateFilters({ ...filters, sortBy: e.target.value as any });
               }}
-              className="w-48"
+              className="w-full sm:w-48 text-sm sm:text-base"
             />
           </div>
         </div>
       </div>
 
       {/* Search Bar */}
-      <div className="px-4 sm:px-6 lg:px-8 py-4 border-b border-gray-200 bg-gray-50">
-        <div className="flex items-center gap-4">
+      <div className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 border-b border-gray-200 bg-gray-50">
+        <div className="flex items-center gap-2 sm:gap-4">
           <input
             type="text"
             placeholder="Search products..."
             value={localSearch}
             onChange={(e) => setLocalSearch(e.target.value)}
-            className="flex-1 max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="flex-1 max-w-md px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
           {/* Mobile Filter Button */}
           <button
             onClick={() => setMobileFiltersOpen(true)}
-            className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="lg:hidden flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[44px]"
           >
-            <Filter className="h-4 w-4" />
-            <span>Filters</span>
+            <Filter className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="hidden xs:inline">Filters</span>
           </button>
         </div>
       </div>
@@ -245,7 +247,7 @@ function CategoryContent({ params }: { params: Promise<{ main: string }> }) {
         )}
 
         {/* Product Grid */}
-        <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           {/* Filter Chips */}
           <FilterChips
             filters={filters}
@@ -261,7 +263,7 @@ function CategoryContent({ params }: { params: Promise<{ main: string }> }) {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-8 flex justify-center items-center gap-2">
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
               <button
                 onClick={() => {
                   const params = new URLSearchParams(searchParams.toString());
@@ -269,11 +271,11 @@ function CategoryContent({ params }: { params: Promise<{ main: string }> }) {
                   window.location.href = `${window.location.pathname}?${params.toString()}`;
                 }}
                 disabled={page === 1}
-                className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="w-full sm:w-auto px-4 sm:px-5 py-2.5 text-sm sm:text-base border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[44px]"
               >
                 Previous
               </button>
-              <span className="text-sm text-gray-600">
+              <span className="text-xs sm:text-sm text-gray-600 whitespace-nowrap">
                 Page {page} of {totalPages}
               </span>
               <button
@@ -283,7 +285,7 @@ function CategoryContent({ params }: { params: Promise<{ main: string }> }) {
                   window.location.href = `${window.location.pathname}?${params.toString()}`;
                 }}
                 disabled={page === totalPages}
-                className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="w-full sm:w-auto px-4 sm:px-5 py-2.5 text-sm sm:text-base border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[44px]"
               >
                 Next
               </button>

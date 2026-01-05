@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { ShoppingCart, Menu, Search, Heart } from "lucide-react";
+import { ShoppingCart, Menu, Search, Heart, ChevronRight, ArrowLeft, ChevronDown } from "lucide-react";
 import { useUIStore } from "@/store/useUIStore";
 import { useCart } from "@/services/queries/cartQueries";
 import { useWishlist } from "@/services/queries/wishlistQueries";
@@ -10,7 +10,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { SearchBar } from "@/components/features/product/SearchBar";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { MegaMenu } from "@/components/layout/MegaMenu";
-import { MegaMenuMobile } from "@/components/layout/MegaMenuMobile";
 import { TopBar } from "@/components/layout/TopBar";
 import { NavbarSearch } from "@/components/layout/NavbarSearch";
 import { categories } from "@/mock/categories";
@@ -33,8 +32,123 @@ const primaryCategories = categories.filter((cat) =>
   ["men", "women", "kids", "home-kitchen"].includes(cat.slug)
 );
 
+// Category Menu Content Component for unified sidebar
+function CategoryMenuContent({ category, onClose }: { category: Category; onClose: () => void }) {
+  const [expandedSubCategory, setExpandedSubCategory] = useState<string | null>(null);
+
+  const toggleSubCategory = (slug: string) => {
+    setExpandedSubCategory(expandedSubCategory === slug ? null : slug);
+  };
+
+  return (
+    <>
+      {/* Main Category Link */}
+      <Link
+        href={`/categories/${category.slug}`}
+        onClick={onClose}
+        className="block py-4 px-4 bg-primary/10 rounded-xl mb-5 hover:bg-primary/15 active:bg-primary/20 transition-colors"
+      >
+        <div className="flex items-center justify-between">
+          <span className="font-bold text-base text-primary">View All {category.name}</span>
+          <ChevronRight className="h-5 w-5 text-primary flex-shrink-0" />
+        </div>
+      </Link>
+
+      {/* Sub Categories */}
+      <div className="space-y-1">
+        {(category.subCategories || []).map((subCategory) => {
+          const subCategorySlug = subCategory.slug || subCategory.name.toLowerCase().replace(/\s+/g, "-");
+          const hasSubSubCategories = subCategory.subSubCategories && subCategory.subSubCategories.length > 0;
+          const isExpanded = expandedSubCategory === subCategorySlug;
+
+          return (
+            <div key={subCategorySlug} className="mb-2">
+              {/* Sub Category Header */}
+              <div className="flex items-center gap-2">
+                {/* Main Sub Category Link */}
+                <Link
+                  href={`/categories/${category.slug}/${subCategorySlug}`}
+                  onClick={onClose}
+                  className={cn(
+                    "flex-1 py-4 px-4 rounded-xl transition-colors",
+                    "font-semibold text-base text-gray-900",
+                    "hover:bg-gray-50 active:bg-gray-100",
+                    "min-h-[56px] flex items-center"
+                  )}
+                >
+                  {subCategory.name}
+                </Link>
+                
+                {/* Expand/Collapse Button */}
+                {hasSubSubCategories && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      toggleSubCategory(subCategorySlug);
+                    }}
+                    className={cn(
+                      "p-3 rounded-xl transition-all flex-shrink-0",
+                      "hover:bg-gray-100 active:bg-gray-200",
+                      "min-h-[56px] min-w-[56px] flex items-center justify-center",
+                      isExpanded && "bg-gray-100"
+                    )}
+                    aria-label={isExpanded ? `Collapse ${subCategory.name}` : `Expand ${subCategory.name}`}
+                  >
+                    <ChevronDown
+                      className={cn(
+                        "h-6 w-6 text-gray-600 transition-transform duration-200",
+                        isExpanded && "rotate-180"
+                      )}
+                    />
+                  </button>
+                )}
+              </div>
+
+              {/* Sub-sub Categories - Expanded View */}
+              {hasSubSubCategories && isExpanded && (
+                <div className="mt-2 ml-4 mb-4 space-y-1 bg-gray-50 rounded-xl p-3">
+                  {subCategory.subSubCategories?.map((subSubCategory) => (
+                    <Link
+                      key={subSubCategory.slug}
+                      href={`/categories/${category.slug}/${subCategorySlug}/${subSubCategory.slug}`}
+                      onClick={onClose}
+                      className={cn(
+                        "block py-3 px-4 rounded-lg transition-colors",
+                        "text-[15px] font-medium text-gray-700",
+                        "hover:text-primary hover:bg-white",
+                        "active:bg-gray-100",
+                        "min-h-[44px] flex items-center"
+                      )}
+                    >
+                      {subSubCategory.name}
+                    </Link>
+                  ))}
+                  <Link
+                    href={`/categories/${category.slug}/${subCategorySlug}`}
+                    onClick={onClose}
+                    className={cn(
+                      "block py-3 px-4 rounded-lg transition-colors mt-2",
+                      "text-[15px] font-semibold text-primary",
+                      "hover:bg-primary/10 active:bg-primary/15",
+                      "min-h-[44px] flex items-center"
+                    )}
+                  >
+                    View All {subCategory.name}
+                  </Link>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
 export function MainNavbar() {
   const {
+    mobileMenuOpen,
     toggleMobileMenu,
     openCartDrawer,
     searchOpen,
@@ -169,6 +283,15 @@ export function MainNavbar() {
   };
 
   const closeMobileMegaMenu = () => {
+    setMobileMenuCategory(null);
+  };
+
+  const goBackToMainMenu = () => {
+    setMobileMenuCategory(null);
+  };
+
+  const closeMobileMenu = () => {
+    toggleMobileMenu();
     setMobileMenuCategory(null);
   };
 
@@ -469,13 +592,122 @@ export function MainNavbar() {
       {/* Search Bar */}
       <SearchBar isOpen={searchOpen} onClose={closeSearch} />
 
-      {/* Mobile Mega Menu */}
-      {mobileMenuCategory && (
-        <MegaMenuMobile
-          category={mobileMenuCategory}
-          isOpen={!!mobileMenuCategory}
-          onClose={closeMobileMegaMenu}
-        />
+      {/* Mobile Menu Drawer - Single Unified Sidebar */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 z-50">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 transition-opacity"
+            onClick={closeMobileMenu}
+          />
+          {/* Unified Sidebar */}
+          <div className={cn(
+            "absolute left-0 top-0 bottom-0 w-full max-w-[85vw] sm:max-w-sm bg-white shadow-xl overflow-y-auto transition-transform duration-300 ease-out",
+            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          )}>
+            {/* Conditional Header - Shows back button when viewing category */}
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-4 flex items-center justify-between z-10 shadow-sm">
+              <div className="flex items-center gap-3">
+                {mobileMenuCategory && (
+                  <button
+                    onClick={goBackToMainMenu}
+                    className="p-2.5 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-colors -ml-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    aria-label="Back to menu"
+                  >
+                    <ArrowLeft className="h-6 w-6 text-gray-700" />
+                  </button>
+                )}
+                <h2 className="text-xl font-bold text-gray-900">
+                  {mobileMenuCategory ? mobileMenuCategory.name : "Menu"}
+                </h2>
+              </div>
+              <button
+                onClick={closeMobileMenu}
+                className="p-2.5 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Close menu"
+              >
+                <span className="text-2xl text-gray-700 leading-none">×</span>
+              </button>
+            </div>
+
+            {/* Content - Switches between main menu and category menu */}
+            <div className="px-4 py-4">
+              {mobileMenuCategory ? (
+                /* Category Menu Content */
+                <CategoryMenuContent
+                  category={mobileMenuCategory}
+                  onClose={closeMobileMenu}
+                />
+              ) : (
+                /* Main Menu Content */
+                <>
+                  {/* Categories */}
+                  <div className="space-y-1">
+                    {primaryCategories.map((category) => (
+                      <button
+                        key={category.slug}
+                        onClick={() => handleMobileCategoryClick(category)}
+                        className={cn(
+                          "w-full flex items-center justify-between py-4 px-4 text-left",
+                          "hover:bg-gray-50 active:bg-gray-100 rounded-xl transition-colors",
+                          "min-h-[56px]"
+                        )}
+                      >
+                        <span className="font-semibold text-base text-gray-900">
+                          {category.name}
+                        </span>
+                        <ChevronRight className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Other Navigation Items */}
+                  <div className="mt-6 pt-6 border-t border-gray-200 space-y-1">
+                    {navigationItems
+                      .filter((item) => !primaryCategories.some((cat) => cat.slug === item.slug))
+                      .map((item) => (
+                        <Link
+                          key={item.slug}
+                          href={item.href}
+                          onClick={closeMobileMenu}
+                          className={cn(
+                            "block py-3 px-4 font-medium text-gray-700 rounded-xl",
+                            "hover:bg-gray-50 active:bg-gray-100 transition-colors",
+                            "min-h-[44px] flex items-center"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                  </div>
+
+                  {/* Account Section */}
+                  {mounted && (
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      {isAuthenticated ? (
+                        <Link
+                          href="/user/profile"
+                          onClick={closeMobileMenu}
+                          className="block py-3 px-4 font-medium text-gray-700 hover:bg-gray-50 active:bg-gray-100 rounded-xl transition-colors min-h-[44px] flex items-center"
+                        >
+                          My Account
+                        </Link>
+                      ) : (
+                        <Link
+                          href="/auth/login"
+                          onClick={closeMobileMenu}
+                          className="block py-3 px-4 font-medium text-primary hover:bg-primary/5 active:bg-primary/10 rounded-xl transition-colors min-h-[44px] flex items-center"
+                        >
+                          Sign In
+                        </Link>
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
