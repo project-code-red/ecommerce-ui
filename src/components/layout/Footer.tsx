@@ -4,9 +4,9 @@ export function Footer() {
   return (
     <footer className="bg-secondary text-white mt-auto">
       <div className="px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
-          {/* Brand Section */}
-          <div className="space-y-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
+          {/* Brand Section - Full width on mobile */}
+          <div className="col-span-2 md:col-span-1 space-y-4">
             <h3 className="text-xl font-bold">E-Commerce</h3>
             <p className="text-gray-300 text-sm leading-relaxed">
               Your one-stop shop for all your needs. Quality products at great prices.
@@ -14,8 +14,8 @@ export function Footer() {
           </div>
 
           {/* Shop Section */}
-          <div>
-            <h4 className="font-semibold mb-4 text-base">Shop</h4>
+          <div className="col-span-1">
+            <h4 className="font-semibold mb-4 text-base lg:text-lg">Shop</h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link href="/categories/men" className="text-gray-300 hover:text-white transition-colors">
@@ -41,8 +41,8 @@ export function Footer() {
           </div>
 
           {/* Customer Service Section */}
-          <div>
-            <h4 className="font-semibold mb-4 text-base">Customer Service</h4>
+          <div className="col-span-1">
+            <h4 className="font-semibold mb-4 text-base lg:text-lg">Customer Service</h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">
@@ -63,8 +63,8 @@ export function Footer() {
           </div>
 
           {/* About Section */}
-          <div>
-            <h4 className="font-semibold mb-4 text-base">About</h4>
+          <div className="col-span-2 md:col-span-1">
+            <h4 className="font-semibold mb-4 text-base lg:text-lg">About</h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link href="/about" className="text-gray-300 hover:text-white transition-colors">

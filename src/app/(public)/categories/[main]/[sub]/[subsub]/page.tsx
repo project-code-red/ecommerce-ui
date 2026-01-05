@@ -20,6 +20,7 @@ function SubSubCategoryContent({ params }: { params: Promise<{ main: string; sub
   const { main, sub, subsub } = use(params);
   const { filters, searchQuery, updateFilters, updateSearch, removeFilter, clearAllFilters } = useProductFilters();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [mobileSortOpen, setMobileSortOpen] = useState(false);
   const searchParams = useSearchParams();
   const [localSearch, setLocalSearch] = useState(searchQuery || "");
   const page = parseInt(searchParams.get("page") || "1");
@@ -192,7 +193,7 @@ function SubSubCategoryContent({ params }: { params: Promise<{ main: string; sub
               {filteredProducts.length.toLocaleString()} items
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-2">
             <ArrowUpDown className="h-4 w-4 text-gray-500" />
             <Select
               options={sortOptions}
@@ -207,7 +208,7 @@ function SubSubCategoryContent({ params }: { params: Promise<{ main: string; sub
       </div>
 
       {/* Search Bar */}
-      <div className="px-4 sm:px-6 lg:px-8 py-4 border-b border-gray-200 bg-gray-50">
+      <div className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 border-b border-gray-200 bg-gray-50">
         <div className="flex items-center gap-4">
           <input
             type="text"
@@ -216,14 +217,6 @@ function SubSubCategoryContent({ params }: { params: Promise<{ main: string; sub
             onChange={(e) => setLocalSearch(e.target.value)}
             className="flex-1 max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
-          {/* Mobile Filter Button */}
-          <button
-            onClick={() => setMobileFiltersOpen(true)}
-            className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <Filter className="h-4 w-4" />
-            <span>Filters</span>
-          </button>
         </div>
       </div>
 
@@ -240,7 +233,7 @@ function SubSubCategoryContent({ params }: { params: Promise<{ main: string; sub
 
         {/* Mobile Filter Drawer */}
         {mobileFiltersOpen && (
-          <div className="lg:hidden fixed inset-0 z-50">
+          <div className="lg:hidden fixed inset-0 z-[80]">
             <div
               className="absolute inset-0 bg-black/50"
               onClick={() => setMobileFiltersOpen(false)}
@@ -250,12 +243,12 @@ function SubSubCategoryContent({ params }: { params: Promise<{ main: string; sub
                 <h2 className="text-lg font-bold">Filters</h2>
                 <button
                   onClick={() => setMobileFiltersOpen(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg"
+                  className="p-2 hover:bg-gray-100 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <div className="p-6">
+              <div className="p-6 pb-24">
                 <FilterSidebar
                   filters={filters}
                   products={allProductsData?.data || []}
@@ -271,7 +264,7 @@ function SubSubCategoryContent({ params }: { params: Promise<{ main: string; sub
         )}
 
         {/* Product Grid */}
-        <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 pb-24 lg:pb-6">
           {/* Filter Chips */}
           <FilterChips
             filters={filters}
@@ -317,6 +310,73 @@ function SubSubCategoryContent({ params }: { params: Promise<{ main: string; sub
           )}
         </div>
       </div>
+
+      {/* Sticky Bottom Bar - Mobile Only: Filter & Sort */}
+      <div className={`lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white border-t-2 border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.1)] safe-area-inset-bottom transition-transform duration-200 ${mobileFiltersOpen ? 'translate-y-full' : ''}`}>
+        <div className="px-4 py-2.5">
+          <div className="flex items-center gap-2.5">
+            {/* Filter Button */}
+            <button
+              onClick={() => setMobileFiltersOpen(true)}
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary-600 active:scale-[0.98] transition-all duration-200 h-[44px]"
+            >
+              <Filter className="h-4 w-4" />
+              <span>Filters</span>
+            </button>
+
+            {/* Sort Button */}
+            <button
+              onClick={() => setMobileSortOpen(true)}
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-semibold bg-white border-2 border-gray-300 text-gray-900 rounded-lg hover:bg-gray-50 hover:border-gray-400 active:scale-[0.98] transition-all duration-200 h-[44px]"
+            >
+              <ArrowUpDown className="h-4 w-4" />
+              <span>Sort</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Sort Modal */}
+      {mobileSortOpen && (
+        <div className="lg:hidden fixed inset-0 z-[70]">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setMobileSortOpen(false)}
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl max-h-[60vh] overflow-y-auto safe-area-inset-bottom">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between z-10">
+              <h2 className="text-lg font-bold">Sort By</h2>
+              <button
+                onClick={() => setMobileSortOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-4 pb-6">
+              {sortOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => {
+                    updateFilters({ ...filters, sortBy: option.value as any });
+                    setMobileSortOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-3 rounded-lg mb-2 transition-all duration-200 min-h-[44px] flex items-center justify-between ${
+                    (filters.sortBy || "popularity") === option.value
+                      ? "bg-primary/10 text-primary font-semibold border-2 border-primary"
+                      : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent"
+                  }`}
+                >
+                  <span className="text-sm">{option.label}</span>
+                  {(filters.sortBy || "popularity") === option.value && (
+                    <span className="text-primary text-lg">✓</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -182,7 +182,7 @@ function mapDummyJsonToProduct(
 
   return {
     id: `prod-${dummyProduct.id}`,
-    slug: `${slug}-${dummyProduct.id}`,
+    slug: slug, // Slug without ID - ID will be in URL path separately
     name: dummyProduct.title,
     description: dummyProduct.description,
     images: dummyProduct.images.length > 0 ? dummyProduct.images : [dummyProduct.thumbnail],

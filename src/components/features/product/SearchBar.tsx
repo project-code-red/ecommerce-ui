@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Search, X } from "lucide-react";
 import { useProducts } from "@/services/queries/productQueries";
 import { Product } from "@/types/product";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, getProductUrl } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -81,7 +81,7 @@ export function SearchBar({ isOpen, onClose }: SearchBarProps) {
   };
 
   const handleProductClick = (product: Product) => {
-    router.push(`/products/${product.slug}`);
+    router.push(getProductUrl(product.slug, product.id));
     onClose();
     setQuery("");
   };

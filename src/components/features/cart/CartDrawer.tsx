@@ -7,7 +7,7 @@ import {
   useUpdateCartItem,
   useRemoveFromCart,
 } from "@/services/queries/cartQueries";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, getProductUrl } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,7 +40,7 @@ export function CartDrawer() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <Link
-                    href={`/products/${item.product.slug}`}
+                    href={getProductUrl(item.product.slug, item.product.id)}
                     onClick={closeCartDrawer}
                     className="font-medium hover:text-primary line-clamp-2"
                   >

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ProductImage } from "@/components/ui/ProductImage";
 import { Heart } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, getProductUrl } from "@/lib/utils";
 import { Product } from "@/types/product";
 import { Badge } from "@/components/ui/Badge";
 import { useIsInWishlist, useAddToWishlist, useRemoveFromWishlist } from "@/services/queries/wishlistQueries";
@@ -38,7 +38,7 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Link href={`/products/${product.slug}`} className="group block h-full">
+    <Link href={getProductUrl(product.slug, product.id)} className="group block h-full">
       <div className="bg-white rounded-lg shadow-card hover:shadow-card-hover transition-all duration-200 overflow-hidden relative h-full flex flex-col card-hover">
         {/* Image Container */}
         <div className="relative aspect-square overflow-hidden bg-gray-100">
