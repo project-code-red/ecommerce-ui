@@ -160,6 +160,20 @@ export const productApi = {
     throw new Error("Product not found");
   },
 
+  getBySlugAndId: async (slug: string, productId: string): Promise<Product> => {
+    await delay(200);
+    // Extract numeric ID from productId (e.g., "83" or "prod-83")
+    const idMatch = productId.match(/(\d+)$/);
+    if (idMatch) {
+      const numericId = parseInt(idMatch[1]);
+      const product = await fetchDummyJsonProductById(numericId);
+      if (product) {
+        return product;
+      }
+    }
+    throw new Error("Product not found");
+  },
+
   getById: async (id: string): Promise<Product> => {
     await delay(200);
     // Extract numeric ID from our ID format (prod-123)

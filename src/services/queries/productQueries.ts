@@ -26,6 +26,14 @@ export const useProductById = (id: string) => {
   });
 };
 
+export const useProductBySlugAndId = (slug: string, productId: string) => {
+  return useQuery<Product>({
+    queryKey: ["product", slug, productId],
+    queryFn: () => productApi.getBySlugAndId(slug, productId),
+    enabled: !!slug && !!productId,
+  });
+};
+
 export const useCreateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({

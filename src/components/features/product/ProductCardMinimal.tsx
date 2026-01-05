@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ProductImage } from "@/components/ui/ProductImage";
 import { Heart } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, getProductUrl } from "@/lib/utils";
 import { Product } from "@/types/product";
 import { useIsInWishlist, useAddToWishlist, useRemoveFromWishlist } from "@/services/queries/wishlistQueries";
 import { useToast } from "@/components/ui/ToastProvider";
@@ -44,7 +44,7 @@ export function ProductCardMinimal({ product, className }: ProductCardMinimalPro
 
   return (
     <Link 
-      href={`/products/${product.slug}`} 
+      href={getProductUrl(product.slug, product.id)} 
       className={cn("group block h-full", className)}
     >
       <div className="bg-white rounded-lg overflow-hidden relative h-full flex flex-col">

@@ -31,3 +31,23 @@ export function formatDateTime(date: string | Date): string {
   }).format(new Date(date));
 }
 
+/**
+ * Get product URL path from product slug and ID
+ * Format: /products/{slug}/{productId}
+ */
+export function getProductUrl(slug: string, productId: string): string {
+  // Extract numeric ID from productId (e.g., "prod-83" -> "83")
+  const idMatch = productId.match(/prod-(\d+)/);
+  const numericId = idMatch ? idMatch[1] : productId;
+  return `/products/${slug}/${numericId}`;
+}
+
+/**
+ * Extract slug from product (remove ID if present)
+ * Format: "blue--black-check-shirt-83" -> "blue--black-check-shirt"
+ */
+export function extractSlugFromProductSlug(fullSlug: string): string {
+  // Remove trailing -{number} pattern
+  return fullSlug.replace(/-\d+$/, '');
+}
+
