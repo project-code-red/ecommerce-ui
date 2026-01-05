@@ -31,14 +31,32 @@ export function PageShell({
   maxWidth = '7xl',
 }: PageShellProps) {
   return (
-    <div className={cn('px-4 sm:px-6 lg:px-8 py-8', maxWidthClasses[maxWidth], className)}>
+    <div className={cn(
+      'px-4 sm:px-6 lg:px-8',
+      'py-4 sm:py-6 lg:py-8',
+      maxWidthClasses[maxWidth],
+      'mx-auto w-full',
+      className
+    )}>
       {(title || headerActions) && (
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            {title && <h1 className="text-3xl font-bold">{title}</h1>}
-            {subtitle && <p className="text-gray-600 mt-2">{subtitle}</p>}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+          <div className="flex-1">
+            {title && (
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                {title}
+              </h1>
+            )}
+            {subtitle && (
+              <p className="text-sm sm:text-base text-gray-600 mt-2">
+                {subtitle}
+              </p>
+            )}
           </div>
-          {headerActions && <div>{headerActions}</div>}
+          {headerActions && (
+            <div className="flex-shrink-0 w-full sm:w-auto">
+              {headerActions}
+            </div>
+          )}
         </div>
       )}
       {children}

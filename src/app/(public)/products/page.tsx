@@ -59,7 +59,13 @@ function ProductsContent() {
   return (
     <PageShell
       title={searchQuery ? `Search Results for "${searchQuery}"` : 'All Products'}
-      headerActions={<SortDropdown options={SORT_OPTIONS} value={sortBy} className="w-48" />}
+      headerActions={
+        <SortDropdown 
+          options={SORT_OPTIONS} 
+          value={sortBy} 
+          className="w-full sm:w-48 text-sm sm:text-base" 
+        />
+      }
     >
       <ProductGrid products={data?.data || []} isLoading={isLoading} />
       {data && data.totalPages > 1 && (

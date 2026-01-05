@@ -14,62 +14,62 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold mb-8">My Account</h1>
+    <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 max-w-7xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-gray-900">My Account</h1>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <Link href="/user/orders">
-          <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <ShoppingBag className="h-6 w-6 text-primary" />
+          <Card className="hover:shadow-md transition-shadow cursor-pointer h-full p-4 sm:p-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <ShoppingBag className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </div>
-              <div>
-                <h3 className="font-semibold">My Orders</h3>
-                <p className="text-sm text-gray-600">View order history</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold text-sm sm:text-base text-gray-900">My Orders</h3>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5">View order history</p>
               </div>
             </div>
           </Card>
         </Link>
 
         <Link href="/user/addresses">
-          <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <MapPin className="h-6 w-6 text-primary" />
+          <Card className="hover:shadow-md transition-shadow cursor-pointer h-full p-4 sm:p-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </div>
-              <div>
-                <h3 className="font-semibold">Addresses</h3>
-                <p className="text-sm text-gray-600">Manage addresses</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold text-sm sm:text-base text-gray-900">Addresses</h3>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5">Manage addresses</p>
               </div>
             </div>
           </Card>
         </Link>
 
         <Link href="/user/wishlist">
-          <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Heart className="h-6 w-6 text-primary" />
+          <Card className="hover:shadow-md transition-shadow cursor-pointer h-full p-4 sm:p-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </div>
-              <div>
-                <h3 className="font-semibold">Wishlist</h3>
-                <p className="text-sm text-gray-600">Saved items</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold text-sm sm:text-base text-gray-900">Wishlist</h3>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5">Saved items</p>
               </div>
             </div>
           </Card>
         </Link>
 
         <Link href="/user/cart">
-          <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Package className="h-6 w-6 text-primary" />
+          <Card className="hover:shadow-md transition-shadow cursor-pointer h-full p-4 sm:p-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Package className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </div>
-              <div>
-                <h3 className="font-semibold">Shopping Cart</h3>
-                <p className="text-sm text-gray-600">View cart</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold text-sm sm:text-base text-gray-900">Shopping Cart</h3>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5">View cart</p>
               </div>
             </div>
           </Card>
@@ -77,38 +77,42 @@ export default function ProfilePage() {
       </div>
 
       {/* Profile Information */}
-      <Card className="mb-8">
-        <h2 className="text-2xl font-bold mb-6">Profile Information</h2>
-        <div className="space-y-4">
+      <Card className="mb-6 sm:mb-8 p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900">Profile Information</h2>
+        <div className="space-y-4 sm:space-y-5">
           <div>
-            <label className="text-sm font-medium text-gray-600">Name</label>
-            <p className="text-lg">{user.name}</p>
+            <label className="text-xs sm:text-sm font-medium text-gray-600 block mb-1">Name</label>
+            <p className="text-base sm:text-lg text-gray-900">{user.name}</p>
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-600">Email</label>
-            <p className="text-lg">{user.email}</p>
+            <label className="text-xs sm:text-sm font-medium text-gray-600 block mb-1">Email</label>
+            <p className="text-base sm:text-lg text-gray-900 break-words">{user.email}</p>
           </div>
           {user.phone && (
             <div>
-              <label className="text-sm font-medium text-gray-600">Phone</label>
-              <p className="text-lg">{user.phone}</p>
+              <label className="text-xs sm:text-sm font-medium text-gray-600 block mb-1">Phone</label>
+              <p className="text-base sm:text-lg text-gray-900">{user.phone}</p>
             </div>
           )}
-          <div className="pt-4">
-            <Button variant="outline">Edit Profile</Button>
+          <div className="pt-2 sm:pt-4">
+            <Button variant="outline" className="w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-2.5">
+              Edit Profile
+            </Button>
           </div>
         </div>
       </Card>
 
       {/* Recent Orders Preview */}
-      <Card>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold">Recent Orders</h2>
-          <Link href="/user/orders">
-            <Button variant="outline">View All Orders</Button>
+      <Card className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Recent Orders</h2>
+          <Link href="/user/orders" className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-2.5">
+              View All Orders
+            </Button>
           </Link>
         </div>
-        <p className="text-gray-600">
+        <p className="text-sm sm:text-base text-gray-600">
           <Link href="/user/orders" className="text-primary hover:underline">
             Click here to view your order history
           </Link>
