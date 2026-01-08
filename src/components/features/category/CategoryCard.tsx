@@ -47,8 +47,8 @@ export function CategoryCard({ category, className }: CategoryCardProps) {
         </div>
 
         {/* Category Name Below */}
-        <div className="p-4 text-center">
-          <h3 className="text-base md:text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
+        <div className="p-3 md:p-4 text-center">
+          <h3 className="text-sm md:text-base lg:text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
             {category.name}
           </h3>
         </div>

@@ -42,7 +42,7 @@ export default function HomePage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Banner Carousel */}
-      <section className="px-4 sm:px-6 lg:px-8 py-6 md:py-8 bg-background">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 bg-background">
         <div className="max-w-7xl mx-auto">
           {bannersLoading ? (
             <div className="relative w-full h-[380px] md:h-[420px] rounded-2xl overflow-hidden shadow-lg bg-gray-200 animate-pulse" />
@@ -53,7 +53,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories Grid - Card Style */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 bg-white">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <CategoryGrid categories={featuredCategories} />
         </div>

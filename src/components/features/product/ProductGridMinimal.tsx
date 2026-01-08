@@ -15,11 +15,11 @@ interface ProductGridMinimalProps {
 export function ProductGridMinimal({ products, isLoading }: ProductGridMinimalProps) {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
         {Array.from({ length: 12 }).map((_, i) => (
           <div key={i} className="bg-white rounded-lg overflow-hidden">
             <Skeleton className="aspect-[3/4] w-full" />
-            <div className="p-3 space-y-2">
+            <div className="p-2 space-y-2">
               <Skeleton className="h-3 w-16" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-3/4" />
@@ -43,7 +43,7 @@ export function ProductGridMinimal({ products, isLoading }: ProductGridMinimalPr
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
       {products.map((product) => (
         <ProductCardMinimal key={product.id} product={product} />
       ))}

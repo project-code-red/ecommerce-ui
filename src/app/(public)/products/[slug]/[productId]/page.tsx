@@ -3,7 +3,7 @@
 import { use, useEffect } from "react";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import { Heart, ShoppingCart, ArrowLeft } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { useProductBySlugAndId, useProducts } from "@/services/queries/productQueries";
 import { useAddToCart } from "@/services/queries/cartQueries";
 import { useIsInWishlist, useAddToWishlist, useRemoveFromWishlist } from "@/services/queries/wishlistQueries";
@@ -89,10 +89,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const isAddingToCart = actionType === "addToCart" && addToCart.isPending;
   const isBuyingNow = actionType === "buyNow" && addToCart.isPending;
 
-  const handleBack = () => {
-    router.back();
-  };
-
   const handleWishlistToggle = () => {
     if (isInWishlist) {
       removeFromWishlist.mutate(product.id, {
@@ -111,18 +107,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 pb-24 md:pb-8 max-w-7xl mx-auto">
-      {/* Back Button */}
-      <button
-        onClick={handleBack}
-        className="group flex items-center gap-2 sm:gap-2.5 mb-4 sm:mb-5 md:mb-6 text-gray-600 hover:text-gray-900 transition-all duration-300 hover:gap-3"
-        aria-label="Go back"
-      >
-        <div className="p-2 sm:p-2.5 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 group-hover:bg-white group-hover:border-gray-300 group-hover:shadow-md transition-all duration-300 min-w-[44px] min-h-[44px] sm:min-w-[48px] sm:min-h-[48px] flex items-center justify-center">
-          <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 transition-transform duration-300 group-hover:-translate-x-0.5" />
-        </div>
-        <span className="text-sm sm:text-base font-medium hidden md:inline-block">Back</span>
-      </button>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
         {/* Image Gallery */}
         <div>

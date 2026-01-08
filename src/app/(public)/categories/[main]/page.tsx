@@ -183,19 +183,6 @@ function CategoryContent({ params }: { params: Promise<{ main: string }> }) {
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 border-b border-gray-200 bg-gray-50">
-        <div className="flex items-center gap-2 sm:gap-4">
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={localSearch}
-            onChange={(e) => setLocalSearch(e.target.value)}
-            className="flex-1 max-w-md px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-          />
-        </div>
-      </div>
-
       {/* Main Layout: Sidebar + Grid */}
       <div className="flex relative">
         {/* Filter Sidebar - Desktop */}
