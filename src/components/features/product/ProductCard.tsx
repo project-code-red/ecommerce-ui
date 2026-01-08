@@ -51,38 +51,38 @@ export function ProductCard({ product }: ProductCardProps) {
           />
           {/* Discount Badge */}
           {product.discountPercentage > 0 && (
-            <Badge variant="warning" className="absolute top-3 left-3 z-10 font-bold">
+            <Badge variant="warning" className="absolute top-2 left-2 z-10 font-bold text-xs px-2 py-0.5">
               {product.discountPercentage}% OFF
             </Badge>
           )}
           {/* Wishlist Button */}
           <button
             onClick={handleWishlistToggle}
-            className="absolute top-3 right-3 p-2 bg-white/95 hover:bg-white rounded-full shadow-md transition-all duration-200 z-10 hover:scale-110"
+            className="absolute top-2 right-2 p-1.5 bg-white/95 hover:bg-white rounded-full shadow-md transition-all duration-200 z-10"
             aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
           >
             <Heart
-              className={`h-5 w-5 transition-colors ${
-                isInWishlist ? "fill-red-500 text-red-500" : "text-gray-600 hover:text-red-500"
+              className={`h-4 w-4 transition-colors ${
+                isInWishlist ? "fill-red-500 text-red-500" : "text-gray-600"
               }`}
             />
           </button>
         </div>
 
         {/* Product Info */}
-        <div className="p-4 flex-1 flex flex-col">
-          <h3 className="font-semibold text-secondary line-clamp-2 mb-3 text-base group-hover:text-primary transition-colors">
+        <div className="p-2 flex-1 flex flex-col">
+          <h3 className="font-medium text-gray-900 line-clamp-2 mb-1.5 text-sm group-hover:text-primary transition-colors">
             {product.name}
           </h3>
           
           {/* Price Section */}
-          <div className="flex items-baseline space-x-2 mb-3">
-            <span className="text-xl font-bold text-secondary">
+          <div className="flex items-baseline gap-1.5 mb-1.5">
+            <span className="text-base font-semibold text-gray-900">
               {formatCurrency(product.price)}
             </span>
             {product.mrp > product.price && (
               <>
-                <span className="text-sm text-gray-500 line-through">
+                <span className="text-xs text-gray-500 line-through">
                   {formatCurrency(product.mrp)}
                 </span>
                 <span className="text-xs font-medium text-accent">
@@ -93,15 +93,15 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Rating Section */}
-          <div className="flex items-center space-x-1 text-sm mt-auto">
-            <div className="flex items-center">
+          {product.ratingCount > 0 && (
+            <div className="flex items-center gap-1 text-xs mt-auto">
               <span className="text-yellow-500">★</span>
-              <span className="font-semibold text-secondary ml-1">
+              <span className="font-medium text-gray-900">
                 {product.rating.toFixed(1)}
               </span>
+              <span className="text-gray-500">({product.ratingCount})</span>
             </div>
-            <span className="text-gray-500">({product.ratingCount})</span>
-          </div>
+          )}
         </div>
       </div>
     </Link>

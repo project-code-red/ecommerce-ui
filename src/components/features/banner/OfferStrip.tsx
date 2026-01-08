@@ -25,27 +25,27 @@ export function OfferStrip({
   return (
     <section
       className={cn(
-        "relative w-full py-8 md:py-12 overflow-hidden",
+        "relative w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12 overflow-hidden",
         className
       )}
       style={{
         background: "linear-gradient(90deg, #1A73E8, #111111)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
           {/* Content */}
           <div className="flex-1 text-center md:text-left">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 md:mb-3">
               {headline}
             </h3>
             {subtext && (
-              <p className="text-white/90 text-base md:text-lg mb-2">
+              <p className="text-white/90 text-sm md:text-base lg:text-lg mb-2 md:mb-3">
                 {subtext}
               </p>
             )}
             {discountText && (
-              <p className="text-accent text-xl md:text-2xl font-bold">
+              <p className="text-accent text-lg md:text-xl lg:text-2xl font-bold">
                 {discountText}
               </p>
             )}

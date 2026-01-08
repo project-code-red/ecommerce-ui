@@ -118,15 +118,6 @@ export function MegaMenu({ category, isOpen, onClose, position, onMouseEnter, on
                       ))}
                     </ul>
                   )}
-
-                  {/* View All Link */}
-                  <Link
-                    href={`/categories/${category.slug}/${subCategorySlug}`}
-                    className="mt-4 text-sm font-medium text-primary hover:underline"
-                    onClick={handleLinkClick}
-                  >
-                    View All {subCategory.name}
-                  </Link>
                 </div>
               );
             })}
@@ -135,7 +126,7 @@ export function MegaMenu({ category, isOpen, onClose, position, onMouseEnter, on
           {/* Featured Image/Banner */}
           {hasFeaturedImage && (
             <div className="relative h-full min-h-[300px] rounded-lg overflow-hidden">
-              <Link href={`/categories/${category.slug}`} onClick={handleLinkClick}>
+              <div className="relative w-full h-full">
                 <Image
                   src={category.image!}
                   alt={category.name}
@@ -149,21 +140,9 @@ export function MegaMenu({ category, isOpen, onClose, position, onMouseEnter, on
                     <p className="text-sm opacity-90">Shop Now</p>
                   </div>
                 </div>
-              </Link>
+              </div>
             </div>
           )}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <Link
-            href={`/categories/${category.slug}`}
-            className="inline-flex items-center text-sm font-semibold text-primary hover:underline"
-            onClick={handleLinkClick}
-          >
-            View All {category.name} Products
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Link>
         </div>
       </div>
     </div>

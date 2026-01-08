@@ -56,18 +56,6 @@ export function MegaMenuMobile({ category, isOpen, onClose, onBack }: MegaMenuMo
 
       {/* Content */}
       <div className="px-4 py-4">
-        {/* Main Category Link */}
-        <Link
-          href={`/categories/${category.slug}`}
-          onClick={onClose}
-          className="block py-4 px-4 bg-primary/10 rounded-xl mb-5 hover:bg-primary/15 active:bg-primary/20 transition-colors"
-        >
-          <div className="flex items-center justify-between">
-            <span className="font-bold text-base text-primary">View All {category.name}</span>
-            <ChevronRight className="h-5 w-5 text-primary flex-shrink-0" />
-          </div>
-        </Link>
-
         {/* Sub Categories */}
         <div className="space-y-1">
           {(category.subCategories || []).map((subCategory, index) => {
@@ -77,14 +65,58 @@ export function MegaMenuMobile({ category, isOpen, onClose, onBack }: MegaMenuMo
 
             return (
               <div key={subCategorySlug} className="mb-2">
-                {/* Sub Category Header - Clickable for both navigation and expansion */}
-                <div className="flex items-center gap-2">
-                  {/* Main Sub Category Link */}
+                {/* Sub Category Header - Clickable to expand/collapse */}
+                {hasSubSubCategories ? (
+                  <>
+                    <button
+                      onClick={() => toggleSubCategory(subCategorySlug)}
+                      className={cn(
+                        "w-full flex items-center justify-between py-4 px-4 rounded-xl transition-colors",
+                        "font-semibold text-base text-gray-900 text-left",
+                        "hover:bg-gray-50 active:bg-gray-100",
+                        "min-h-[56px]",
+                        isExpanded && "bg-gray-50"
+                      )}
+                      aria-label={isExpanded ? `Collapse ${subCategory.name}` : `Expand ${subCategory.name}`}
+                    >
+                      <span>{subCategory.name}</span>
+                      <ChevronDown
+                        className={cn(
+                          "h-5 w-5 text-gray-400 flex-shrink-0 transition-transform duration-200",
+                          isExpanded && "rotate-180"
+                        )}
+                      />
+                    </button>
+
+                    {/* Sub-sub Categories - Expanded View */}
+                    {isExpanded && (
+                      <div className="mt-2 space-y-1">
+                        {subCategory.subSubCategories?.map((subSubCategory) => (
+                          <Link
+                            key={subSubCategory.slug}
+                            href={`/categories/${category.slug}/${subCategorySlug}/${subSubCategory.slug}`}
+                            onClick={onClose}
+                            className={cn(
+                              "block py-3 px-4 rounded-lg transition-colors",
+                              "text-[15px] font-medium text-gray-700",
+                              "hover:text-primary hover:bg-gray-50",
+                              "active:bg-gray-100",
+                              "min-h-[44px] flex items-center"
+                            )}
+                          >
+                            {subSubCategory.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  // If no sub-subcategories, make it a clickable link
                   <Link
                     href={`/categories/${category.slug}/${subCategorySlug}`}
                     onClick={onClose}
                     className={cn(
-                      "flex-1 py-4 px-4 rounded-xl transition-colors",
+                      "block py-4 px-4 rounded-xl transition-colors",
                       "font-semibold text-base text-gray-900",
                       "hover:bg-gray-50 active:bg-gray-100",
                       "min-h-[56px] flex items-center"
@@ -92,65 +124,6 @@ export function MegaMenuMobile({ category, isOpen, onClose, onBack }: MegaMenuMo
                   >
                     {subCategory.name}
                   </Link>
-                  
-                  {/* Expand/Collapse Button - Separate touch target */}
-                  {hasSubSubCategories && (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleSubCategory(subCategorySlug);
-                      }}
-                      className={cn(
-                        "p-3 rounded-xl transition-all flex-shrink-0",
-                        "hover:bg-gray-100 active:bg-gray-200",
-                        "min-h-[56px] min-w-[56px] flex items-center justify-center",
-                        isExpanded && "bg-gray-100"
-                      )}
-                      aria-label={isExpanded ? `Collapse ${subCategory.name}` : `Expand ${subCategory.name}`}
-                    >
-                      <ChevronDown
-                        className={cn(
-                          "h-6 w-6 text-gray-600 transition-transform duration-200",
-                          isExpanded && "rotate-180"
-                        )}
-                      />
-                    </button>
-                  )}
-                </div>
-
-                {/* Sub-sub Categories - Expanded View */}
-                {hasSubSubCategories && isExpanded && (
-                  <div className="mt-2 ml-4 mb-4 space-y-1 bg-gray-50 rounded-xl p-3">
-                    {subCategory.subSubCategories?.map((subSubCategory) => (
-                      <Link
-                        key={subSubCategory.slug}
-                        href={`/categories/${category.slug}/${subCategorySlug}/${subSubCategory.slug}`}
-                        onClick={onClose}
-                        className={cn(
-                          "block py-3 px-4 rounded-lg transition-colors",
-                          "text-[15px] font-medium text-gray-700",
-                          "hover:text-primary hover:bg-white",
-                          "active:bg-gray-100",
-                          "min-h-[44px] flex items-center"
-                        )}
-                      >
-                        {subSubCategory.name}
-                      </Link>
-                    ))}
-                    <Link
-                      href={`/categories/${category.slug}/${subCategorySlug}`}
-                      onClick={onClose}
-                      className={cn(
-                        "block py-3 px-4 rounded-lg transition-colors mt-2",
-                        "text-[15px] font-semibold text-primary",
-                        "hover:bg-primary/10 active:bg-primary/15",
-                        "min-h-[44px] flex items-center"
-                      )}
-                    >
-                      View All {subCategory.name}
-                    </Link>
-                  </div>
                 )}
               </div>
             );
