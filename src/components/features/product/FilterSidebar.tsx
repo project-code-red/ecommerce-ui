@@ -133,16 +133,16 @@ export function FilterSidebar({
       <div className="border-b border-gray-200 last:border-0">
         <button
           onClick={() => toggleSection(id)}
-          className="w-full flex items-center justify-between py-4 text-left"
+          className="w-full flex items-center justify-between py-3 sm:py-4 text-left min-h-[44px] sm:min-h-[48px]"
         >
-          <h3 className="font-semibold text-gray-900">{title}</h3>
+          <h3 className="text-sm sm:text-base font-semibold text-gray-900">{title}</h3>
           {isOpen ? (
-            <ChevronUp className="h-4 w-4 text-gray-500" />
+            <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 flex-shrink-0" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-gray-500" />
+            <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 flex-shrink-0" />
           )}
         </button>
-        {isOpen && <div className="pb-4">{children}</div>}
+        {isOpen && <div className="pb-3 sm:pb-4">{children}</div>}
       </div>
     );
   };
@@ -155,12 +155,12 @@ export function FilterSidebar({
         className
       )}
     >
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-gray-900">Filters</h2>
+      <div className="p-4 sm:p-5 md:p-6">
+        <div className="flex items-center justify-between mb-4 sm:mb-5 md:mb-6">
+          <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">Filters</h2>
           <button
             onClick={() => onFiltersChange({})}
-            className="text-sm text-primary hover:text-primary/80 font-medium"
+            className="text-xs sm:text-sm text-primary hover:text-primary/80 font-medium min-h-[32px] sm:min-h-[36px] px-2 sm:px-3"
           >
             Clear All
           </button>
@@ -169,11 +169,11 @@ export function FilterSidebar({
         <div className="space-y-0">
           {/* Gender */}
           <FilterSection id="gender" title="Gender">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {["Men", "Women", "Kids", "Unisex"].map((gender) => (
                 <label
                   key={gender}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
@@ -184,9 +184,9 @@ export function FilterSidebar({
                         category: filters.category === gender ? undefined : gender,
                       })
                     }
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{gender}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{gender}</span>
                 </label>
               ))}
             </div>
@@ -194,11 +194,11 @@ export function FilterSidebar({
 
           {/* Category */}
           <FilterSection id="category" title="Category">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {["Clothing", "Footwear", "Accessories", "Beauty"].map((cat) => (
                 <label
                   key={cat}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
@@ -209,9 +209,9 @@ export function FilterSidebar({
                         subCategory: filters.subCategory === cat ? undefined : cat,
                       })
                     }
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{cat}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{cat}</span>
                 </label>
               ))}
             </div>
@@ -221,29 +221,29 @@ export function FilterSidebar({
           <FilterSection id="brand" title="Brand">
             <div className="space-y-3">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search brand..."
+                  placeholder="Search brands..."
                   value={brandSearch}
                   onChange={(e) => setBrandSearch(e.target.value)}
-                  className="w-full pl-10 pr-8 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full pl-9 sm:pl-10 pr-8 py-2 sm:py-2.5 text-xs sm:text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
                 {brandSearch && (
                   <button
                     onClick={() => setBrandSearch("")}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 min-w-[32px] min-h-[32px] flex items-center justify-center"
                   >
                     <X className="h-4 w-4 text-gray-400" />
                   </button>
                 )}
               </div>
-              <div className="max-h-48 overflow-y-auto space-y-2">
+              <div className="max-h-48 overflow-y-auto space-y-2 sm:space-y-2.5">
                 {filteredBrands.length > 0 ? (
                   filteredBrands.map((brand) => (
                     <label
                       key={brand}
-                      className="flex items-center space-x-2 cursor-pointer"
+                      className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                     >
                       <input
                         type="checkbox"
@@ -254,13 +254,13 @@ export function FilterSidebar({
                             category: filters.category === brand ? undefined : brand,
                           })
                         }
-                        className="rounded border-gray-300 text-primary focus:ring-primary"
+                        className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                       />
-                      <span className="text-sm text-gray-700">{brand}</span>
+                      <span className="text-xs sm:text-sm md:text-base text-gray-700">{brand}</span>
                     </label>
                   ))
                 ) : (
-                  <p className="text-sm text-gray-500">No brands found</p>
+                  <p className="text-xs sm:text-sm text-gray-500 py-2">No brands found</p>
                 )}
               </div>
             </div>
@@ -278,9 +278,9 @@ export function FilterSidebar({
                     onChange={(e) =>
                       handlePriceChange("min", parseFloat(e.target.value) || 0)
                     }
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-2 sm:px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   />
-                  <span className="text-gray-500">-</span>
+                  <span className="text-gray-500 text-sm">-</span>
                   <input
                     type="number"
                     placeholder="Max"
@@ -288,12 +288,12 @@ export function FilterSidebar({
                     onChange={(e) =>
                       handlePriceChange("max", parseFloat(e.target.value) || 0)
                     }
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-2 sm:px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-xs text-gray-500 mb-2">Quick Select:</p>
+                <p className="text-xs sm:text-sm text-gray-500 mb-2">Quick Select:</p>
                 {[
                   { label: "Under ₹500", max: 500 },
                   { label: "₹500 - ₹1,000", min: 500, max: 1000 },
@@ -304,7 +304,7 @@ export function FilterSidebar({
                   <button
                     key={preset.label}
                     onClick={() => handlePresetPrice(preset)}
-                    className="w-full text-left px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded transition-colors"
+                    className="w-full text-left px-2 sm:px-3 py-2 sm:py-1.5 text-xs sm:text-sm text-gray-700 hover:bg-gray-50 rounded transition-colors min-h-[36px] sm:min-h-[32px]"
                   >
                     {preset.label}
                   </button>
@@ -315,7 +315,7 @@ export function FilterSidebar({
 
           {/* Discount */}
           <FilterSection id="discount" title="Discount">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {[
                 { label: "10% and above", min: 10 },
                 { label: "20% and above", min: 20 },
@@ -325,13 +325,13 @@ export function FilterSidebar({
               ].map((discount) => (
                 <label
                   key={discount.label}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{discount.label}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{discount.label}</span>
                 </label>
               ))}
             </div>
@@ -339,17 +339,17 @@ export function FilterSidebar({
 
           {/* Product Label */}
           <FilterSection id="label" title="Product Label">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {["Bestseller", "Latest Style", "New Arrival"].map((label) => (
                 <label
                   key={label}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{label}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{label}</span>
                 </label>
               ))}
             </div>
@@ -357,19 +357,19 @@ export function FilterSidebar({
 
           {/* Size - Multi-select */}
           <FilterSection id="size" title="Size">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {availableSizes.map((size) => (
                 <label
                   key={size}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
                     checked={filters.sizes?.includes(size) || false}
                     onChange={() => handleMultiSelect("sizes", size)}
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{size}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{size}</span>
                 </label>
               ))}
             </div>
@@ -379,24 +379,24 @@ export function FilterSidebar({
           <FilterSection id="color" title="Color">
             <div className="space-y-3">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search color..."
                   value={colorSearch}
                   onChange={(e) => setColorSearch(e.target.value)}
-                  className="w-full pl-10 pr-8 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full pl-9 sm:pl-10 pr-8 py-2 sm:py-2.5 text-xs sm:text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
                 {colorSearch && (
                   <button
                     onClick={() => setColorSearch("")}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 min-w-[32px] min-h-[32px] flex items-center justify-center"
                   >
                     <X className="h-4 w-4 text-gray-400" />
                   </button>
                 )}
               </div>
-              <div className="max-h-48 overflow-y-auto space-y-2">
+              <div className="max-h-48 overflow-y-auto space-y-2 sm:space-y-2.5">
                 {filteredColors.length > 0 ? (
                   filteredColors.map((color) => {
                     const colorMap: Record<string, string> = {
@@ -415,24 +415,24 @@ export function FilterSidebar({
                     return (
                       <label
                         key={color}
-                        className="flex items-center space-x-2 cursor-pointer"
+                        className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                       >
                         <input
                           type="checkbox"
                           checked={filters.colors?.includes(color) || false}
                           onChange={() => handleMultiSelect("colors", color)}
-                          className="rounded border-gray-300 text-primary focus:ring-primary"
+                          className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                         />
                         <div
-                          className="w-4 h-4 rounded-full border border-gray-300"
+                          className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-gray-300 flex-shrink-0"
                           style={{ backgroundColor: colorHex }}
                         />
-                        <span className="text-sm text-gray-700">{color}</span>
+                        <span className="text-xs sm:text-sm md:text-base text-gray-700">{color}</span>
                       </label>
                     );
                   })
                 ) : (
-                  <p className="text-sm text-gray-500">No colors found</p>
+                  <p className="text-xs sm:text-sm text-gray-500 py-2">No colors found</p>
                 )}
               </div>
             </div>
@@ -440,85 +440,85 @@ export function FilterSidebar({
 
           {/* Additional Filters */}
           <FilterSection id="material" title="Material">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {["Cotton", "Polyester", "Silk", "Denim", "Wool"].map((material) => (
                 <label
                   key={material}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{material}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{material}</span>
                 </label>
               ))}
             </div>
           </FilterSection>
 
           <FilterSection id="sleeve" title="Sleeve Type">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {["Full Sleeve", "Half Sleeve", "Sleeveless", "3/4 Sleeve"].map((sleeve) => (
                 <label
                   key={sleeve}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{sleeve}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{sleeve}</span>
                 </label>
               ))}
             </div>
           </FilterSection>
 
           <FilterSection id="pattern" title="Pattern">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {["Solid", "Striped", "Printed", "Checked", "Floral"].map((pattern) => (
                 <label
                   key={pattern}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{pattern}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{pattern}</span>
                 </label>
               ))}
             </div>
           </FilterSection>
 
           <FilterSection id="fit" title="Fit">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {["Regular", "Slim", "Loose", "Oversized"].map((fit) => (
                 <label
                   key={fit}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{fit}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{fit}</span>
                 </label>
               ))}
             </div>
           </FilterSection>
 
           <FilterSection id="occasion" title="Occasion">
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-2.5">
               {["Casual", "Formal", "Party", "Sports", "Wedding"].map((occasion) => (
                 <label
                   key={occasion}
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer py-1 min-h-[36px] sm:min-h-[40px]"
                 >
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-primary focus:ring-primary flex-shrink-0"
                   />
-                  <span className="text-sm text-gray-700">{occasion}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-700">{occasion}</span>
                 </label>
               ))}
             </div>
