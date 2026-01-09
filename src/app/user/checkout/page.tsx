@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   useCart,
@@ -22,22 +22,36 @@ export default function CheckoutPage() {
   const removeCoupon = useRemoveCoupon();
   const [paymentMethod, setPaymentMethod] = useState("stripe");
   const [couponCode, setCouponCode] = useState("");
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
-  // console.log("cart", cart);
-  if (!cart || cart.items.length === 0) {
-    router.push("/cart");
+  // Redirect to cart if cart is empty (but not when placing order)
+  useEffect(() => {
+    if (cart && cart.items.length === 0 && !isPlacingOrder && !createOrder.isPending) {
+      router.push("/user/cart");
+    }
+  }, [cart, router, isPlacingOrder, createOrder.isPending]);
+
+  // Show loading or nothing while cart is loading or empty (unless placing order)
+  if ((!cart || cart.items.length === 0) && !isPlacingOrder && !createOrder.isPending) {
     return null;
   }
 
   const handlePlaceOrder = () => {
+    setIsPlacingOrder(true);
     createOrder.mutate(
       { addressId: "addr-1", paymentMethod },
       {
         onSuccess: (order) => {
-          showToast("Order placed successfully!", "success");
-          router.push(`/user/orders/${order.id}`);
+          if (order?.id) {
+            // Navigate to success page with order ID using replace to prevent back navigation
+            router.replace(`/user/order-success?orderId=${order.id}`);
+          } else {
+            // Fallback to orders list if order.id is missing
+            router.replace("/user/orders");
+          }
         },
         onError: (error: any) => {
+          setIsPlacingOrder(false);
           showToast(error.message || "Failed to place order", "error");
         },
       }
