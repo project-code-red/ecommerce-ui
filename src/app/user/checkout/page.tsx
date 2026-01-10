@@ -36,6 +36,11 @@ export default function CheckoutPage() {
     return null;
   }
 
+  // Ensure cart is defined after early return check
+  if (!cart) {
+    return null;
+  }
+
   const handlePlaceOrder = () => {
     setIsPlacingOrder(true);
     createOrder.mutate(
